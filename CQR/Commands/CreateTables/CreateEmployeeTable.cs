@@ -10,7 +10,7 @@
             createTableStr = @"CREATE TABLE EMPLOYEES
             (
               Id Int NOT NULL IDENTITY(1,1) PRIMARY KEY,
-              EmployeeNo VarChar(10),
+              EmployeeNo VarChar(10) NOT NULL UNIQUE,
               Name VarChar(30),
               Surname VarChar(30),
               DateOfBirth Date,

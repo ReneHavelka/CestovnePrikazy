@@ -6,21 +6,23 @@ namespace CestovnePrikazy.CQR.Common
     internal class GeneralCommand
     {
         string connectionString;
+        internal SqlCommand ExecutionCommand { get; set; }
 
         internal GeneralCommand()
         {
             connectionString = new ConnectionStr().ConnectionString;
+            ExecutionCommand = new SqlCommand();
         }
 
         internal void ExecuteTravelRecordCommand(string sQLStr)
         {
             using (SqlConnection cnn = new(connectionString))
             {
-                SqlCommand createTableCommand = new(sQLStr, cnn);
-
-                createTableCommand.Connection.Open();
-                createTableCommand.ExecuteNonQuery();
-                createTableCommand.Connection.Close();
+                ExecutionCommand.Connection = cnn;
+                ExecutionCommand.CommandText = sQLStr;
+                ExecutionCommand.Connection.Open();
+                ExecutionCommand.ExecuteNonQuery();
+                ExecutionCommand.Connection.Close();
             }
         }
     }
